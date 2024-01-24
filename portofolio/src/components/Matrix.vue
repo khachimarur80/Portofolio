@@ -1,10 +1,10 @@
 <template>
   <div id="matrix">
-    <div class="plane">
-      <span class="letter" v-for="(row, i) in matrix" :key="i"> 
-        {{ row.letters[row.index] }}
-      </span>
-    </div>
+    <template v-for="(row, i) in matrix" :key="i">
+      <div class="plane">
+        <span class="letter">{{ row.letters[row.targetIndex] }}</span>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -77,19 +77,19 @@ export default {
   mounted() {
     this.initializeDisplay()
 
-    let completed = false
+    //let completed = false
 
-    const intervalId = setInterval(() => {
+    /*const intervalId = setInterval(() => {
       completed = this.runMatrix()
 
       if (completed) {
         clearInterval(intervalId); 
       }
-    }, 45);
+    }, 45);*/
 
     setTimeout(()=>{
       this.$emit('matrixOver')
-    }, 45*this.iterations - 500)
+    }, 45*this.iterations*0 - 500 + 1500)
   },
 }
 </script>
