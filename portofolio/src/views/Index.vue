@@ -2,7 +2,7 @@
   <div id="index" @mousemove="mouseMove" @scroll="handleScroll">
     <nodeBackground :mouseEvent="mouseEvent"/>
     <navBar :over="over" :items="pageItems" :show="show"/>
-    <!--<matrixEffect :message="greeting" @matrixOver="matrixOver"/>-->
+    <matrixEffect :message="greeting" @matrixOver="matrixOver"/>
     <vSection :contents="sections[0]"></vSection>
     <vTechnologies :technologies="technologies"/>
     <!--Skills-->
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-//import matrixEffect from '@/components/Matrix.vue'
+import matrixEffect from '@/components/Matrix.vue'
 import vSection from '@/components/Section.vue'
 import vTechnologies from '@/components/Technologies.vue'
 import navBar from '@/components/NavBar.vue'
@@ -25,7 +25,7 @@ import pageFooter from '@/components/Footer.vue'
 export default {
   name: 'App',
   components: {
-    //matrixEffect,
+    matrixEffect,
     vSection,
     vTechnologies,
     navBar,
