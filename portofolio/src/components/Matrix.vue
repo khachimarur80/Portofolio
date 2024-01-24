@@ -105,7 +105,9 @@ export default {
       completed = this.runMatrix();
 
       if (!completed) {
-        requestAnimationFrame(animate);
+        setTimeout(() => {
+          requestAnimationFrame(animate);
+        }, 80);
       }
     };
 
