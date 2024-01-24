@@ -1,10 +1,10 @@
 <template>
   <div id="matrix">
-    <template v-for="(row, i) in matrix" :key="i">
-      <div class="plane">
-        <span class="letter">{{ row.letters[row.index] }}</span>
-      </div>
-    </template>
+    <div class="plane">
+      <span class="letter" v-for="(row, i) in matrix" :key="i"> 
+        {{ row.letters[row.index] }}
+      </span>
+    </div>
   </div>
 </template>
 
@@ -61,7 +61,7 @@ export default {
         let row = new Row(this.message[i], this.iterations)
         this.matrix.push(row)
 
-        this.iterations += Math.floor(Math.random())+1
+        this.iterations += Math.floor(Math.random()*2)+1
       }
     },
     runMatrix() {
@@ -85,11 +85,11 @@ export default {
       if (completed) {
         clearInterval(intervalId); 
       }
-    }, 45);
+    }, 80);
 
     setTimeout(()=>{
       this.$emit('matrixOver')
-    }, 45*this.iterations - 500)
+    }, 80*this.iterations - 500)
   },
 }
 </script>
@@ -118,22 +118,22 @@ export default {
 }
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
   .letter {
-    font-size: 50px;
+    font-size: 60px;
   }
 }
 @media only screen and (min-width: 1024px) and (max-width: 1279px) {
   .letter {
-    font-size: 70px;
+    font-size: 80px;
   }
 }
 @media only screen and (min-width: 1280px) and (max-width: 1439px) {
   .letter {
-    font-size: 100px;
+    font-size: 110px;
   }
 }
 @media only screen and (min-width: 1440px) {
   .letter {
-    font-size: 140px;
+    font-size: 150px;
   }
 }
 </style>
