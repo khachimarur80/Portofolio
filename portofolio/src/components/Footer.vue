@@ -39,8 +39,6 @@ export default {
       },
     ]
   }),
-  mounted() {
-  }
 }
 </script>
 
@@ -56,15 +54,14 @@ export default {
     justify-content: space-around;
   }
   .footer-title {
-    font-family: "HelveticaNeue";
     font-weight: bold;
     font-size: 24px;
-    color: white;
+    color: var(--background-dark);
   }
   .footer-text {
     font-family: "HelveticaNeue";
     font-size: 14px;
-    color: white;
+    color: var(--background-dark);
   }
   .socials {
     display: flex;

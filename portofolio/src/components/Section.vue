@@ -77,7 +77,7 @@ export default {
 
   @media only screen and (max-width: 767px) {
     .section {
-      height: 500px;
+      height: 600px;
       padding: 20px;
     }
     .section-inner {
@@ -85,7 +85,7 @@ export default {
       min-width: 400px;
     }
     .section-image {
-      height: 100vh;
+      height: 400px;
     }
     .section-text  h1 {
       font-size: 26px;

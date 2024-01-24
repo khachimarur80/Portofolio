@@ -61,7 +61,7 @@ export default {
         let row = new Row(this.message[i], this.iterations)
         this.matrix.push(row)
 
-        this.iterations += Math.floor(Math.random()*2)+1
+        this.iterations += Math.floor(Math.random())+1
       }
     },
     runMatrix() {
@@ -85,11 +85,11 @@ export default {
       if (completed) {
         clearInterval(intervalId); 
       }
-    }, 80);
+    }, 45);
 
     setTimeout(()=>{
       this.$emit('matrixOver')
-    }, 80*this.iterations - 500)
+    }, 45*this.iterations - 500)
   },
 }
 </script>

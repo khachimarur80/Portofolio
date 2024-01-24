@@ -12,6 +12,8 @@
               :rules="nameRules"
               class="outlined-input"
               name="from_name"
+              id="from_name"
+              aria-invalid="!nameRules"
             />
           </div>
           <div class="form-row">
@@ -23,6 +25,8 @@
               :rules="emailRules"
               class="outlined-input"
               name="user_email"
+              id="user_email"
+              aria-invalid="!emailRules"
             />
           </div>
           <div class="form-row">
@@ -33,8 +37,9 @@
               :rules="messageRules"
               class="outlined-textarea"
               noresize
-              autofocus
               name="message"
+              id="message"
+              aria-invalid="!messageRules"
             ></textarea>
           </div>
           <div style="display: flex; width: 100%">
@@ -199,6 +204,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: fit-content;
   }
   .section-inner {
     display: flex;
@@ -219,10 +225,6 @@ export default {
     height: 100px;
   }
   @media only screen and (max-width: 767px) {
-    .section {
-      height: 300px;
-      padding: 20px;
-    }
     h1 {
       font-size: 26px;
       text-align: center;
