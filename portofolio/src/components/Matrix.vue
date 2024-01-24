@@ -57,35 +57,59 @@ export default {
   }),
   methods: {
     initializeDisplay() {
-      for (let i=0; i<this.message.length; i++) {
-        let row = new Row(this.message[i], this.iterations)
-        this.matrix.push(row)
+      const fragment = document.createDocumentFragment();
+      for (let i = 0; i < this.message.length; i++) {
+        const row = new Row(this.message[i], this.iterations, this.message.length);
+        this.matrix.push(row);
 
-        this.iterations += Math.floor(Math.random()*2)+1
+        this.iterations += Math.floor(Math.random() * 2) + 1;
       }
+
+      this.matrix.forEach(row => {
+        fragment.appendChild(this.createRowElement(row));
+      });
+
+      document.getElementById('matrix').appendChild(fragment);
     },
+
+    createRowElement(row) {
+      const rowElement = document.createElement('div');
+      rowElement.classList.add('plane');
+
+      row.letters.forEach(letter => {
+        const span = document.createElement('span');
+        span.classList.add('letter');
+        span.textContent = letter;
+        rowElement.appendChild(span);
+      });
+
+      return rowElement;
+    },
+
     runMatrix() {
-      for (let i=0; i<this.matrix.length; i++) {
-        this.matrix[i].updateLetters()
+      for (let i = 0; i < this.matrix.length; i++) {
+        this.matrix[i].updateLetters();
       }
 
-      let matched = this.matrix.every(row => row.index == row.targetIndex)
+      const matched = this.matrix.every(row => row.index === row.targetIndex);
 
-      return matched
-    }
+      return matched;
+    },
   },
   mounted() {
     this.initializeDisplay()
 
-    let completed = false
+    let completed = false;
 
-    const intervalId = setInterval(() => {
-      completed = this.runMatrix()
+    const animate = () => {
+      completed = this.runMatrix();
 
-      if (completed) {
-        clearInterval(intervalId); 
+      if (!completed) {
+        requestAnimationFrame(animate);
       }
-    }, 80);
+    };
+
+    requestAnimationFrame(animate);
 
     setTimeout(()=>{
       this.$emit('matrixOver')
