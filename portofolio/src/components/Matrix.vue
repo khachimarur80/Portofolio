@@ -114,26 +114,26 @@ export default {
   text-shadow: 0px 0px 2vh var(--primary);
   user-select: none;
   text-align: center;
-  font-size: 35px;
+  font-size: 25px;
 }
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
   .letter {
-    font-size: 70px;
+    font-size: 50px;
   }
 }
 @media only screen and (min-width: 1024px) and (max-width: 1279px) {
   .letter {
-    font-size: 90px;
+    font-size: 70px;
   }
 }
 @media only screen and (min-width: 1280px) and (max-width: 1439px) {
   .letter {
-    font-size: 120px;
+    font-size: 100px;
   }
 }
 @media only screen and (min-width: 1440px) {
   .letter {
-    font-size: 160px;
+    font-size: 140px;
   }
 }
 </style>
