@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import matrixEffect from '@/components/Matrix.vue'
+//import matrixEffect from '@/components/Matrix.vue'
 import vSection from '@/components/Section.vue'
 import vTechnologies from '@/components/Technologies.vue'
 import navBar from '@/components/NavBar.vue'
@@ -25,7 +25,7 @@ import pageFooter from '@/components/Footer.vue'
 export default {
   name: 'App',
   components: {
-    matrixEffect,
+    //matrixEffect,
     vSection,
     vTechnologies,
     navBar,
