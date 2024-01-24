@@ -57,19 +57,12 @@ export default {
   }),
   methods: {
     initializeDisplay() {
-      const fragment = document.createDocumentFragment();
       for (let i = 0; i < this.message.length; i++) {
         const row = new Row(this.message[i], this.iterations, this.message.length);
         this.matrix.push(row);
 
         this.iterations += Math.floor(Math.random() * 2) + 1;
       }
-
-      this.matrix.forEach(row => {
-        fragment.appendChild(this.createRowElement(row));
-      });
-
-      document.getElementById('matrix').appendChild(fragment);
     },
 
     createRowElement(row) {

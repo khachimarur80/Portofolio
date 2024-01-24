@@ -2,7 +2,7 @@
   <div id="index" @mousemove="mouseMove" @scroll="handleScroll">
     <nodeBackground :mouseEvent="mouseEvent"/>
     <navBar :over="over" :items="pageItems" :show="show"/>
-    <matrixEffect :message="greeting" @matrixOver="matrixOver"/>
+    <!--<matrixEffect :message="greeting" @matrixOver="matrixOver"/>-->
     <vSection :contents="sections[0]"></vSection>
     <vTechnologies :technologies="technologies"/>
     <!--Skills-->
