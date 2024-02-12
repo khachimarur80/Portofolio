@@ -2,55 +2,60 @@
   <div class="section" id="contact">
       <div class="section-inner">
         <h1>Contacto</h1>
-        <form class="contact-form" id="contact-form" @submit="submitForm(event)" ref="contactForm">
+        <form class="contact-form" id="contact-form" @submit="submitForm" ref="contactForm">
           <div class="form-row">
             <label for="from_name">Nombre:</label>
-            <input
-              type="text"
-              v-model="formData.from_name"
-              required
-              :rules="nameRules"
-              class="outlined-input"
-              name="from_name"
-              id="from_name"
-              aria-invalid="!nameRules"
-            />
+            <input 
+              type="text" 
+              id="from_name" 
+              name="from_name" 
+              required 
+              aria-describedby="username-error" 
+              placeholder="Introduce tu nombre" 
+              v-model="formData.from_name" 
+              @focusout="validateField('from_name')" 
+              @keyup="validateField('from_name')">
+            <div id="name-error" class="error-message" aria-live="polite">{{ errors.from_name }}</div>
           </div>
           <div class="form-row">
             <label for="user_email">Email:</label>
-            <input
-              type="email"
-              v-model="formData.user_email"
-              required
-              :rules="emailRules"
-              class="outlined-input"
-              name="user_email"
-              id="user_email"
-              aria-invalid="!emailRules"
-            />
+            <input 
+              type="email" 
+              id="user_email" 
+              name="user_email" 
+              required 
+              aria-describedby="email-error" 
+              placeholder="Introduce tu email" 
+              v-model="formData.user_email" 
+              @focusout="validateField('user_email')" 
+              @keyup="validateField('user_email')">
+            <div id="email-error" class="error-message" aria-live="polite">{{ errors.user_email }}</div>
           </div>
           <div class="form-row">
             <label for="message">Mensaje:</label>
             <textarea
-              v-model="formData.message"
-              required
-              :rules="messageRules"
-              class="outlined-textarea"
-              noresize
-              name="message"
-              id="message"
-              aria-invalid="!messageRules"
-            ></textarea>
+              type="text" 
+              id="message" 
+              name="message" 
+              required 
+              aria-describedby="message-error" 
+              placeholder="Introduce tu mensaje" 
+              v-model="formData.message" 
+              @focusout="validateField('message')" 
+              @keyup="validateField('message')"></textarea>
+            <div id="message-error" class="error-message" aria-live="polite">{{ errors.message }}</div>
           </div>
           <div style="display: flex; width: 100%">
             <div style="flex-grow: 1;"></div>
             <button
               type="submit"
-              :style="{'background' : sendColor}"
+              :style="{'--color' : sendColor}"
               id="send"
-              :disabled="(sendText!='Enviar') || (!validFields)"
+              tabindex="-1" 
+              :disabled="!validForm"
             >
-              {{ sendText }}
+              <span v-if="!sending">{{ sendText }}</span>
+              <span class="loader" v-else></span>
             </button>
           </div>
         </form>
@@ -67,60 +72,129 @@ export default {
   methods: {
     resetForm() {
       this.$refs.contactForm.reset();
+      this.formData = {
+        from_name: '',
+        user_email: '',
+        message: '',
+      };
     },
-    submitForm() {
+    submitForm(event) {
+      event.preventDefault()
       this.sending = true
       const vm = this
       emailjs.init('Ifjg_oR_H0mMlRnTI')
-      this.formData.message = 'From Portofolio: ' + this.formData.message
+
       emailjs.sendForm("service_p4b392o", "template_wokpaeh", '#contact-form')
       .then(function () {
-        document.getElementById('contact-form').reset();
-        vm.sendColor = 'var(--success)'
+        vm.sendColor = vm.theme.success
         vm.sendText = 'Enviado!'
+        document.getElementById('send').classList.add('noevent')
 
         setTimeout(()=>{
-          vm.sendColor = 'var(--primary)'
+          vm.sendColor = vm.theme.primary
           vm.sendText = 'Enviar'
           vm.resetForm();
+          vm.validForm = false
+          document.getElementById('send').classList.remove('noevent')
         }, 3000)
 
         vm.sending = false
       })
-      .catch(function (error) {
-        document.getElementById('contact-form').reset();
-        vm.sendColor = 'var(--error)'
+      .catch(function () {
+        vm.sendColor = vm.theme.error
         vm.sendText = 'Error'
+        document.getElementById('send').classList.add('noevent')
 
         setTimeout(()=>{
+          vm.sendColor = vm.theme.primary
           vm.sendText = 'Enviar'
           vm.resetForm();
+          vm.validForm = false
+          document.getElementById('send').classList.remove('noevent')
         }, 3000)
 
         vm.sending = false
-        console.error("Email sending failed:", error);
       });
+    },
+    validateAllFields() {
+      let valid = true
+
+      if (!this.formData.user_email.trim()) {
+        valid = false
+      } 
+      else if (!/\S+@\S+\.\S+/.test(this.formData.user_email)) {
+        valid = false
+      } 
+      if (!this.formData.from_name.trim()) {
+        valid = false
+      } 
+      if (!this.formData.message.trim()) {
+        valid = false
+      } 
+
+      return valid
+    },
+    validateField(field) {
+      let fields = ['user_email', 'from_name', 'message']
+
+      switch (fields.indexOf(field)) {
+        case 0:
+          if (!this.formData.user_email.trim()) {
+            this.errors.email = 'Introduce tu email!';
+          } 
+          else if (!/\S+@\S+\.\S+/.test(this.formData.user_email)) {
+            this.errors.user_email = 'Email inválido!';
+          } 
+          else {
+            this.errors.user_email = '';
+          }
+          break;
+        case 1:
+          if (!this.formData.from_name.trim()) {
+            this.errors.from_name = 'Introduce tu  nombre!';
+          } 
+          else {
+            this.errors.from_name = '';
+          }
+          break;
+        case 2:
+          if (!this.formData.message.trim()) {
+            this.errors.message = 'Escribe tu mensaje!';
+          } 
+          else {
+            this.errors.message = '';
+          }
+          break;
+      }
+
+      this.validForm = this.validateAllFields()
+
+      if (this.validForm) {
+        this.sendColor = "var(--primary)"
+      }
     },
   },
 
   data: () => ({
+    theme: {
+      primary: '#22A2A2',
+      backgroundDark: '#040404',
+      background: '#121212',
+      error: '#DB4437',
+      success: '#0F9D58',
+      warning: '#F4B400',
+    },
+    validForm: false,
     formData: {
       from_name: '',
       user_email: '',
       message: '',
+    },    
+    errors: {
+      from_name: '',
+      user_email: '',
+      message: '',
     },
-    nameRules: [
-      v => !!v || 'Name is required',
-      v => (v && v.length <= 50) || 'Name must be less than 50 characters',
-    ],
-    emailRules: [
-      v => !!v || 'Email is required',
-      v => /.+@.+\..+/.test(v) || 'Email must be valid',
-    ],
-    messageRules: [
-      v => !!v || 'Message is required',
-      v => (v && v.length <= 500) || 'Message must be less than 500 characters',
-    ],
     sending: false,
     sendText: 'Enviar',
     sendColor: 'var(--primary)',
@@ -177,25 +251,24 @@ export default {
     margin-bottom: 20px;
   }
 
-  #send[disabled] {
-    filter: brightness(.5) saturate(50%);
-  }
-
   #send {
-    height: 30px;
-    width: 80px;
-    font-size: 15px;
+    cursor: pointer;
+    background: var(--color);
+    padding: 15px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 8px;
     border: none;
-    border-radius: 5px;
-    filter: brightness(1.2);
-    background: var(--primary);
+    width: 80px;
+    height: 35px;
+    color: white;
   }
 
   #send:not([disabled]) {
     cursor: pointer;
   }
 
-  #send:active {
+  #send:not([disabled]):active {
     outline: 1px solid var(--primary);
     background: var(--background-dark);
     color: var(--primary);
@@ -282,5 +355,38 @@ export default {
     input, textarea {
       width: 500px;
     }
+  }
+
+  .error-message {
+    color: var(--error);
+    font-size: 12px;
+    margin: 0px;
+    margin-top: -15px;
+    margin-bottom: -10px;
+    width: 100%;
+    height: 24px;
+    font-weight: bold;
+  }
+  #send[disabled] {
+    cursor: not-allowed;
+    filter: brightness(.5);
+  }
+
+  .loader {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border: 3px solid var(--primary);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+  }
+
+  .noevent {
+    pointer-events: none;
   }
 </style>
