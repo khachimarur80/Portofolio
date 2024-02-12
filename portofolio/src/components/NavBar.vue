@@ -88,4 +88,14 @@ export default {
   transform-origin: bottom right;
   transition: transform 0.3s ease;
 }
+@media only screen and (max-width: 660px) {
+  .navbar-item {
+    font-size: 14px;
+  }
+}
+@media only screen and (max-width: 661px) and (min-width: 800px) {
+  .navbar-item {
+    font-size: 20px;
+  }
+}
 </style>

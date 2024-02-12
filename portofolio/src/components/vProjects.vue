@@ -123,6 +123,22 @@ export default {
       text-align: center;
       margin-left: 0px;
     }
+    .project {
+      flex-direction: column;
+      width: 100%;
+      height: 600px;
+      justify-content: center;
+      padding-top: 30px;
+    }
+    .project-photo {
+      width: 100%;
+      padding: 0px;
+      overflow: hidden;
+    }
+    .project-info {
+      width: calc(100% - 60px);
+      height: fit-content;
+    }
   }
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
     h1 {
