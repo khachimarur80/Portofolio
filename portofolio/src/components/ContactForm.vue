@@ -72,7 +72,7 @@ export default {
       this.sending = true
       const vm = this
       emailjs.init('Ifjg_oR_H0mMlRnTI')
-
+      this.formData.message = 'From Portofolio: ' + this.formData.message
       emailjs.sendForm("service_p4b392o", "template_wokpaeh", '#contact-form')
       .then(function () {
         document.getElementById('contact-form').reset();
