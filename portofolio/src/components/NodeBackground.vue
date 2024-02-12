@@ -40,7 +40,7 @@ class Dot {
 export default {
   name: 'nodeBackground',
   data: () => ({
-    ctx: null,
+    ctx: [],
     points: [],
     density: 80, //Points per px
     height: 0,

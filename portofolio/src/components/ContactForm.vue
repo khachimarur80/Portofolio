@@ -123,6 +123,7 @@ export default {
     ],
     sending: false,
     sendText: 'Enviar',
+    sendColor: 'var(--primary)',
   }),
 
   computed: {

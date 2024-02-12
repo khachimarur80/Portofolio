@@ -11,9 +11,9 @@
         target="_blank"
         class="social-link"
       >
-        <v-btn icon dense small dark>
+        <button icon dense small dark>
          <img :src="require(`@/assets/${social.icon}.webp`)" :alt="social.name" width="30px">
-        </v-btn>
+        </button>
       </a>
     </span>
     <span class="footer-text">
@@ -29,12 +29,12 @@ export default {
     socials: [
       {
         name: 'LinkedIn',
-        icon: 'linkedin',
+        icon: 'icons/linkedin',
         link: 'https://www.linkedin.com/in/kei-rodríguez-hachimaru-849317296/',
       },
       {
         name: 'Github',
-        icon: 'github',
+        icon: 'icons/github',
         link: 'https://github.com/khachimarur80',
       },
     ]
@@ -43,6 +43,20 @@ export default {
 </script>
 
 <style scoped>
+  button {
+    background: none;
+    border: none;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  button:hover {
+    background: rgba(0,0,0,.1);
+  }
   #footer {
     user-select: none;
     height: 140px;

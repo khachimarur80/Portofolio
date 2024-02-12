@@ -108,7 +108,7 @@ export default {
 
     setTimeout(()=>{
       this.$emit('matrixOver')
-    }, 80*this.iterations - 500)
+    }, 30*this.iterations - 500)
   },
 }
 </script>
